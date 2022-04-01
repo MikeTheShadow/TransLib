@@ -1,6 +1,6 @@
 # Trans Lib
 
-## A multi-purpose translation library for Spigot
+## A multipurpose translation library for Spigot
 
 ### Features
 
@@ -14,10 +14,15 @@
 
 ```xml
 
+<repository>
+    <id>miketheshadow.repo</id>
+    <url>https://maven.miketheshadow.ca</url>
+</repository>
+
 <dependency>
     <groupId>com.miketheshadow</groupId>
-    <artifactId>MMOTextAPI</artifactId>
-    <version>0.4.0</version>
+    <artifactId>TransLib</artifactId>
+    <version>1.0-BETA</version>
 </dependency>
 ```
 
