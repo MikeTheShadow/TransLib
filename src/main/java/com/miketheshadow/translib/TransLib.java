@@ -11,7 +11,7 @@ public class TransLib {
     private String activeConfig;
 
     /**
-     * The base config must contain all possible keys. Lacking all keys will cause severe stability
+     * The base config must contain all possible keys. Lacking all keys will cause severe stability issues
      * @param baseConfigName The config to use as a template for all of them
      * @param configFolder The folder that contains your configurations
      * @param activeConfig The currently active configuration
