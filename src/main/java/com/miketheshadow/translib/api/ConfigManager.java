@@ -1,6 +1,8 @@
 package com.miketheshadow.translib.api;
 
 import com.miketheshadow.translib.util.ConfigRecord;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -64,15 +66,20 @@ public class ConfigManager {
         // Marking as dirty prevents unnecessary saving
         boolean isDirty = false;
 
+        int missing = 0;
         for (String key : keys) {
             if (!yamlConfiguration.contains(key)) {
                 yamlConfiguration.set(key, primaryConfig.getString(key));
                 yamlConfiguration.setComments(key, Collections.singletonList("Please update this field!"));
                 isDirty = true;
+                missing++;
             }
         }
         if (isDirty) {
             try {
+                Bukkit.getServer().getLogger().warning("[TransLib] " + ChatColor.YELLOW +  " Warning: config "
+                        + record.configLocation().getAbsolutePath() + " is missing " + missing +
+                        " key(s). If you use this configuration please update it with the missing values. Otherwise ignore this message.");
                 yamlConfiguration.save(configFile);
             } catch (IOException e) {
                 throw new IllegalStateException("Unable to update config " + configFile.getAbsolutePath() + " " + e.getMessage());

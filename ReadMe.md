@@ -2,7 +2,13 @@
 
 ## A multi-purpose translation library
 
-> Video walkthrough of the code is here if that's more your style https://www.youtube.com/watch?v=UvhGFYaNFPE
+### Features
+- Multi-config translations
+- Automatically adds placeholders for missing config translations
+- Automatically adds comments on missing translations so end users/devs can easily find and update missing values
+- Adds placeholders for missing config values to prevent errors
+- Console warns user when missing config values are found
+> Video walkthrough of the library is here if that's more your style https://www.youtube.com/watch?v=UvhGFYaNFPE
 
 # Use Case #1
 
