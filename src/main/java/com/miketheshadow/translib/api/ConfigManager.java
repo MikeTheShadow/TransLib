@@ -1,6 +1,5 @@
 package com.miketheshadow.translib.api;
 
-import com.miketheshadow.translib.util.ConfigRecord;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -36,8 +35,7 @@ public class ConfigManager {
 
         for (File file : files) {
             YamlConfiguration yamlConfiguration = loadConfiguration(file);
-            ConfigRecord record = new ConfigRecord(yamlConfiguration, file);
-            validateConfiguration(record, primaryConfig);
+            validateConfiguration(file, yamlConfiguration, primaryConfig);
             configMap.put(file.getName(), yamlConfiguration);
         }
     }
@@ -56,13 +54,12 @@ public class ConfigManager {
     /**
      * This is used only to validate a secondary config to the primary configuration file
      *
-     * @param record        A quick pair of config and file.
-     * @param primaryConfig the primary configuration file to pull the keys from
+     * @param configFile        the file location
+     * @param yamlConfiguration the config to validate
+     * @param primaryConfig     the primary configuration file to pull the keys from
      */
-    private void validateConfiguration(ConfigRecord record, YamlConfiguration primaryConfig) {
+    private void validateConfiguration(File configFile, YamlConfiguration yamlConfiguration, YamlConfiguration primaryConfig) {
         Set<String> keys = primaryConfig.getKeys(false);
-        YamlConfiguration yamlConfiguration = record.configuration();
-        File configFile = record.configLocation();
 
         // Marking as dirty prevents unnecessary saving
         boolean isDirty = false;
@@ -79,7 +76,7 @@ public class ConfigManager {
         if (isDirty) {
             try {
                 String message = "[TransLib] " + ChatColor.YELLOW + " Warning: config "
-                        + record.configLocation().getAbsolutePath() + " is missing " + missing +
+                        + configFile.getAbsolutePath() + " is missing " + missing +
                         " key(s). If you use this configuration please update it with the missing values. Otherwise ignore this message.";
 
                 if (Bukkit.getServer() == null) Logger.getLogger(ConfigManager.class.getName()).warning(message);
