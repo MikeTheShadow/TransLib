@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * A simple impl for loading a folder of configs
@@ -77,9 +78,13 @@ public class ConfigManager {
         }
         if (isDirty) {
             try {
-                Bukkit.getServer().getLogger().warning("[TransLib] " + ChatColor.YELLOW +  " Warning: config "
+                String message = "[TransLib] " + ChatColor.YELLOW + " Warning: config "
                         + record.configLocation().getAbsolutePath() + " is missing " + missing +
-                        " key(s). If you use this configuration please update it with the missing values. Otherwise ignore this message.");
+                        " key(s). If you use this configuration please update it with the missing values. Otherwise ignore this message.";
+
+                if (Bukkit.getServer() == null) Logger.getLogger(ConfigManager.class.getName()).warning(message);
+                else Bukkit.getServer().getLogger().warning(message);
+
                 yamlConfiguration.save(configFile);
             } catch (IOException e) {
                 throw new IllegalStateException("Unable to update config " + configFile.getAbsolutePath() + " " + e.getMessage());
